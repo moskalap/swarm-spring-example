@@ -30,7 +30,10 @@ docker swarm join \
 ```
 
 # Utworzenie lokalnego Registry Server
-Skrypt registry_create generuje certyfikat SSL i stawia Registry Server na maszynie na której jest wykonany.
+
+**Registry Server** - serwer z obrazami 
+
+Skrypt scripts/registry_create.sh generuje certyfikat SSL i stawia Registry Server na maszynie na której jest wykonany.
 ```
 registry_create.sh <ip maszyny, na której jest wykonany>
 ```
@@ -40,7 +43,7 @@ Nale¿y go skopiowaæ, bedzie potrzebny na pozosta³ych maszynach.
 
 # Dodanie certyfikatu Registry Server do zaufanych
 
-Skrypt trust.sh dodaje wygenerowany certyfikat TLS do zaufanych, nale¿y go wykonaæ na ka¿dej maszynie, która bêdzie korzysta³a z prywatnego Registry Servera.
+Skrypt scripts/trust.sh dodaje wygenerowany certyfikat TLS do zaufanych, nale¿y go wykonaæ na ka¿dej maszynie, która bêdzie korzysta³a z prywatnego Registry Servera.
 
 ```
 trust.sh <IP_REGISTRY_SERVER> <œcie¿ka do pliku my-registry.crt>
@@ -64,11 +67,12 @@ docker build -t=chat .
 # Publikowanie obrazu w registry serverze
 
 ```
-docker tag chat <IP_REGISTRY_SERVER>:5000/<IMAGE_NAME>
+docker tag <IMAGE_NAME> <IP_REGISTRY_SERVER>:5000/<IMAGE_NAME>
 docker push <IP_REGISTRY_SERVER>:5000/<IMAGE_NAME>
 
 ```
 gdzie *<IP_REGISTRY_SERVER>* - adres serwera z obrazami
+		
 		*<IMAGE_NAME>* - nazwa obrazu do opublikowania
 np.
 ```
@@ -92,21 +96,21 @@ docker service create
 
 # Aktualizacja serwisu
 Na przyk³adzie:
-1. W app2/ jest zakutalizowany plik .jar. Budujemy z niego obraz wykonuj¹c to polecenie w katalogu app2/:
-```
-docker build -t=chat .
-```
+1. W app2/ jest zauktalizowany plik .jar. Budujemy z niego obraz wykonuj¹c to polecenie w katalogu app2/:
+	```
+	docker build -t=chat .
+	```
 2. Publikujemy obraz do Registry Servera
-```
-docker tag chat 10.212.8.89:5000/chat
-docker push 10.212.8.89:5000/chat
-```
+	```
+	docker tag chat 10.212.8.89:5000/chat
+	docker push 10.212.8.89:5000/chat
+	```
 3. Aktualizacja serwisu
-```
-docker service update --image <image_tag> <service_name>
-```
-np
-```
-docker service update --image 10.212.8.89:5000/chat swarmchat
-```
+	```
+	docker service update --image <image_tag> <service_name>
+	```
+	np.:
+	```
+	docker service update --image 10.212.8.89:5000/chat swarmchat
+	```
 4. Obrazy zostan¹ podmienione na workerach
