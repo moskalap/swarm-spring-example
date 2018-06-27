@@ -71,9 +71,11 @@ docker tag <IMAGE_NAME> <IP_REGISTRY_SERVER>:5000/<IMAGE_NAME>
 docker push <IP_REGISTRY_SERVER>:5000/<IMAGE_NAME>
 
 ```
-gdzie *<IP_REGISTRY_SERVER>* - adres serwera z obrazami
+gdzie 
+
+*<IP_REGISTRY_SERVER>* - adres serwera z obrazami
 		
-		*<IMAGE_NAME>* - nazwa obrazu do opublikowania
+*<IMAGE_NAME>* - nazwa obrazu do opublikowania
 np.
 ```
 docker tag chat 10.212.8.89.5000/chat
