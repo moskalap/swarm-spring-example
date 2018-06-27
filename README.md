@@ -1,6 +1,6 @@
 
 # Stworzenie swarma manulanie
-Tworzy swarma na ró¿nych hostach.
+Dwa rodzaje wêz³ow: manager i worker
 ## Manager 
 
 ```bash
@@ -30,8 +30,7 @@ docker swarm join \
 ```
 
 # Utworzenie lokalnego Registry Server
-Skrypt registry_create generuje certyfikat TLS i stawia Registry Server na maszynie na której jest wykonany.
-uruchomienie:
+Skrypt registry_create generuje certyfikat SSL i stawia Registry Server na maszynie na której jest wykonany.
 ```
 registry_create.sh <ip maszyny, na której jest wykonany>
 ```
@@ -47,15 +46,21 @@ Skrypt trust.sh dodaje wygenerowany certyfikat TLS do zaufanych, nale¿y go wykon
 trust.sh <IP_REGISTRY_SERVER> <œcie¿ka do pliku my-registry.crt>
 ```
 wiêcej info: 
-	* https://docs.docker.com/registry/configuration/#list-of-configuration-options
 	
-	* https://hackernoon.com/create-a-private-local-docker-registry-5c79ce912620
+	https://docs.docker.com/registry/configuration/#list-of-configuration-options
+	
+	https://hackernoon.com/create-a-private-local-docker-registry-5c79ce912620
 
 # Budowanie obrazu
-w katalogu /app1 wykonaæ
+```
+docker build -t=<IMAGE_NAME> <œcie¿ka do kataologu z Dockerfile>
+```
+np.
+w katalogu /app wykonaæ
 ```
 docker build -t=chat .
 ```
+
 # Publikowanie obrazu w registry serverze
 
 ```
